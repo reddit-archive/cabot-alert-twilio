@@ -27,6 +27,9 @@ TWILIO_OUTGOING_NUMBER=
 # which s3 bucket to put the temporary TwiML files in
 # a lifecycle policy to clear out old files is probably a good idea here
 TWILIO_TWIML_BUCKET=
+
+# a fallback twiml source for when S3 is unavailable.
+TWILIO_TWIML_FALLBACK=
 ```
 
 [Cabot]: https://github.com/arachnys/cabot

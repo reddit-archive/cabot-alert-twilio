@@ -132,6 +132,8 @@ class TwilioPhoneCall(AlertPlugin):
             service_name=service.name,
         )
 
+        twiml_fallback_url = os.environ["TWILIO_TWIML_FALLBACK"]
+
         # since cabot is running behind a firewall, we can't have twilio hit us
         # directly for TwiML.  so, we build it and throw it up on s3.  this
         # means that phone calls require s3 to be available, which isn't ideal,
@@ -154,6 +156,8 @@ class TwilioPhoneCall(AlertPlugin):
                     from_=outgoing_number,
                     url=twiml_callback_url,
                     method="GET",
+                    fallback_url=twiml_fallback_url,
+                    fallback_method="GET",
                 )
             except Exception as exception:
                 _LOG.exception("Error making phone call: %s", exception)
