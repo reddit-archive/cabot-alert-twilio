@@ -72,8 +72,9 @@ class TwilioSMS(AlertPlugin):
             return "\n".join((prefix, body, suffix))
 
     def send_alert(self, service, users, duty_officers):
-        if (service.old_overall_status == service.PASSING_STATUS and
-            service.overall_status == service.WARNING_STATUS):
+        ignored_statuses = (service.WARNING_STATUS, service.PASSING_STATUS)
+        if (service.old_overall_status in ignored_statuses and
+            service.overall_status in ignored_statuses):
             return
 
         message = self._make_message(service)
