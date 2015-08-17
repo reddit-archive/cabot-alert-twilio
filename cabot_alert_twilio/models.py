@@ -159,6 +159,7 @@ class TwilioPhoneCall(AlertPlugin):
                     method="GET",
                     fallback_url=twiml_fallback_url,
                     fallback_method="GET",
+                    if_machine="Hangup",
                 )
             except Exception as exception:
                 _LOG.exception("Error making phone call: %s", exception)
