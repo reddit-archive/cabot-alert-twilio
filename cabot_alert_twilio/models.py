@@ -123,7 +123,7 @@ class TwilioPhoneCall(AlertPlugin):
             )
             return key.generate_url(expires_in=60)
         except Exception as exception:
-            _LOG.exception("Error uploading to S3: %s", exception)
+            _LOG.error("Error uploading to S3: %s", exception)
 
     def send_alert(self, service, users, duty_officers):
         if service.overall_status != service.CRITICAL_STATUS:
@@ -144,7 +144,7 @@ class TwilioPhoneCall(AlertPlugin):
         response.say(message, voice="alice", loop=3)
         twiml_callback_url = self._upload_to_s3(str(response))
         if not twiml_callback_url:
-            return
+            twiml_callback_url = twiml_fallback_url
 
         on_call = TwilioUserData.objects.filter(user__user__in=duty_officers)
         mobiles = [u.prefixed_phone_number for u in on_call if u.phone_number]
